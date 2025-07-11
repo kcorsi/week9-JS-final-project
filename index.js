@@ -58,7 +58,7 @@ deck.shuffleDeck()
 console.log (deck.deck)  //This is not printing the deck correctly. Lists a lot of undefined values.
 
 
-/*class Game {
+class Game {
   constructor () {
     this.player1 = {
       name: "Player1",
@@ -79,13 +79,22 @@ console.log (deck.deck)  //This is not printing the deck correctly. Lists a lot 
     deck.createDeck ()
     deck.shuffleDeck()
 
-      while (deck.deck.length )
+      while (deck.deck.length i == 0) {
+      
+      this.player1.hand.push(deck.deck.shift()}
+      this.player2.hand.push(deck.deck.shift()}
+
+      console.log(this.player1.hand)
+      console.log(this.player2.hand)
+      }
     }
 
 
 
-}*/
+}
+
+const game = new Game
+game.playGame()
 
 
-
-
+//Missing game functionality because I am not sure where my errors are where the two hands of 26 cards should be printed to console.
