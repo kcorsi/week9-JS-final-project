@@ -22,41 +22,76 @@ The completed project should, when executed, do the following:
 //let cardDeck = [];
 
 class Deck {
-  constructor (cards) {
+  constructor(cards) {
     this.deck = [];
-    this.ranks = ["Ace of", "King of", "Queen of", "Jack of", "Ten of", "Nine of", "Eight of", "Seven of", "Six of", "Five of", "Four of", "Three of", "Two of"];
+    this.shuffledDeck = [];
+    this.ranks = [
+      "Ace of",
+      "King of",
+      "Queen of",
+      "Jack of",
+      "Ten of",
+      "Nine of",
+      "Eight of",
+      "Seven of",
+      "Six of",
+      "Five of",
+      "Four of",
+      "Three of",
+      "Two of",
+    ];
     this.suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
   }
 
   makeDeck() {
     for (let i = 0; i < this.suits.length; i++) {
       for (let j = 0; j < this.ranks.length; j++) {
-         let card = {
+        let card = {
           name: `${this.ranks[j]} ${this.suits[i]}`,
-          value: j + 1
-        }
+          value: j + 1,
+        };
 
         this.deck.push(card);
-        
-        console.log(card)
-        }
+
+        //console.log(card)
       }
     }
-  shuffleDeck() {
-    for (let i = this.deck.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [this.deck[i], this.deck[j]] = [this.deck[j]], [this.deck[i]];
-    }
   }
-
+  shuffleDeck() {
+    for (let i = 0; i < 52; i++) {
+      console.log("i = ", i);
+      const cardsInDeck = this.deck.length;
+      let random = Math.floor(Math.random() * (cardsInDeck - 1));
+      const removedCard = this.deck.splice(random, 1);
+      // console.log(
+      //   "random = ",
+      //   random,
+      //   "cardsInDeck = ",
+      //   cardsInDeck,
+      //   "removedCard = ",
+      //   removedCard[0]
+      // );
+      this.shuffledDeck.push(removedCard[0]);
+      // this.shuffledDeck.push(99);
+      // console.log(JSON.stringify(this.shuffledDeck, null, 4));
+    }
+    //     for (let i = this.deck.length - 1; i > 0; i--) {
+    //       let j = Math.floor(Math.random() * (i + 1));
+    //       ([this.deck[i], this.deck[j]] = [this.deck[j]]), [this.deck[i]];
+    //     }
+  }
 }
 
-const deck = new Deck
-deck.makeDeck()
-deck.shuffleDeck()
+const deck = new Deck();
+deck.makeDeck();
+// console.log(JSON.stringify(deck.deck, null, 4));
 
-console.log (deck.deck)  //This is not printing the deck correctly. Lists a lot of undefined values.
+deck.shuffleDeck();
+console.log(JSON.stringify(deck.deck, null, 4));
+console.log("shuffledDeck = ");
+console.log(JSON.stringify(deck.shuffledDeck, null, 4));
 
+// console.log(deck.deck); //This is not printing the deck correctly. Lists a lot of undefined values.
 
 /*class Game {
   constructor () {
@@ -65,18 +100,20 @@ console.log (deck.deck)  //This is not printing the deck correctly. Lists a lot 
       score: 0,
       hand: []
     }
-  
+  slice (doesn't change original array), push, 0-26, from shuffledDeck to player1, each time they win a round increment their score by 1
+
     this.player2 = {
       name: "Player2",
       score: 0,
       hand: []
     }
   }
+  push, 27-52
 
     playGame () {
 
     const deck = new Deck
-    deck.createDeck ()
+    deck.makeDeck()
     deck.shuffleDeck()
 
       while (deck.deck.length i == 0) {
@@ -95,6 +132,5 @@ console.log (deck.deck)  //This is not printing the deck correctly. Lists a lot 
 
 const game = new Game
 game.playGame()*/
-
 
 //Missing game functionality because I am not sure where my errors are where the two hands of 26 cards should be printed to console.
