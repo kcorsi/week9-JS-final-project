@@ -79,58 +79,56 @@ class Deck {
     //       let j = Math.floor(Math.random() * (i + 1));
     //       ([this.deck[i], this.deck[j]] = [this.deck[j]]), [this.deck[i]];
     //     }
+    console.log(deck.shuffledDeck.length);
   }
 }
 
 const deck = new Deck();
-deck.makeDeck();
+// deck.makeDeck();
 // console.log(JSON.stringify(deck.deck, null, 4));
 
 deck.shuffleDeck();
-console.log(JSON.stringify(deck.deck, null, 4));
-console.log("shuffledDeck = ");
-console.log(JSON.stringify(deck.shuffledDeck, null, 4));
+// console.log(JSON.stringify(deck.deck, null, 4));
+// console.log("shuffledDeck = ");
+// console.log(JSON.stringify(deck.shuffledDeck, null, 4));
 
-// console.log(deck.deck); //This is not printing the deck correctly. Lists a lot of undefined values.
+// console.log(deck.shuffledDeck.length);
 
-/*class Game {
-  constructor () {
+const halfDeck = Math.ceil(deck.shuffledDeck.length / 2);
+console.log(halfDeck);
+
+class Game {
+  constructor() {
     this.player1 = {
       name: "Player1",
       score: 0,
-      hand: []
-    }
-  slice (doesn't change original array), push, 0-26, from shuffledDeck to player1, each time they win a round increment their score by 1
+      hand: [],
+    };
+    //slice (doesn't change original array), push, 0-26, from shuffledDeck to player1, each time they win a round increment their score by 1
+    this.player1.hand.push(3);
+    console.log(this.player1.hand);
 
     this.player2 = {
       name: "Player2",
       score: 0,
-      hand: []
-    }
+      hand: [],
+    };
   }
-  push, 27-52
+  //push, 27-52
 
-    playGame () {
+  playGame() {
+    // const deck = new Deck
+    // deck.makeDeck()
+    // deck.shuffleDeck()
+    //         const i = 0;
+    //         while (deck.shuffledDeck.length i == 0) {
+    //         this.player1.hand.push(deck.shuffledDeck.slice)(0, halfDeck)
+    //         this.player2.hand.push(deck.shuffledDeck.slice)(halfDeck, deck.shuffledDeck.length)}
+    //         console.log(this.player1.hand)
+    //         console.log(this.player2.hand)
+    //         }
+    //       }
+  }
 
-    const deck = new Deck
-    deck.makeDeck()
-    deck.shuffleDeck()
-
-      while (deck.deck.length i == 0) {
-      
-      this.player1.hand.push(deck.deck.shift()}
-      this.player2.hand.push(deck.deck.shift()}
-
-      console.log(this.player1.hand)
-      console.log(this.player2.hand)
-      }
-    }
-
-
-
-}
-
-const game = new Game
-game.playGame()*/
-
-//Missing game functionality because I am not sure where my errors are where the two hands of 26 cards should be printed to console.
+  // const game = new Game
+} // game.playGame()
