@@ -12,7 +12,7 @@ The completed project should, when executed, do the following:
 */
 
 class Game {
-  constructor(cards) {
+  constructor() {
     this.deck = [];
     this.shuffledDeck = [];
     this.ranks = [
@@ -48,12 +48,11 @@ class Game {
   makeDeck() {
     for (let i = 0; i < this.suits.length; i++) {
       for (let j = 0; j < this.ranks.length; j++) {
-        let card = {
+        const card = {
           name: `${this.ranks[j]} ${this.suits[i]}`,
           value: j + 1,
         };
         this.deck.push(card);
-        console.log(deck);
       }
     }
   }
@@ -61,35 +60,27 @@ class Game {
   shuffleDeck() {
     for (let i = 0; i < 52; i++) {
       const cardsInDeck = this.deck.length;
-      let random = Math.floor(Math.random() * (cardsInDeck - 1));
+      const random = Math.floor(Math.random() * (cardsInDeck - 1));
       const removedCard = this.deck.splice(random, 1);
       this.shuffledDeck.push(removedCard[0]);
-      console.log(cardsInDeck);
     }
   }
 
   playGame() {
-    let i = 1;
-
-    const game = new Game();
-    game.makeDeck();
-    game.shuffleDeck();
-
     console.log(this.shuffledDeck);
 
     game.player1.hand = game.shuffledDeck.slice(0, 26);
     console.log(this.player1.hand);
-    game.player2.hand = game.shuffledDeck.slice(26, 53);
+    game.player2.hand = game.shuffledDeck.slice(26, 52);
     console.log(this.player2.hand);
 
-    // while (i < 27) {
-    for (let i = 0; i < 27; i++) {
+    for (let i = 0; i < 26; i++) {
       const player1Card = this.player1.hand.shift();
       const player2Card = this.player2.hand.shift();
       if (player1Card.value < player2Card.value) {
         this.player1.score++;
         console.log("Player 2 wins a point");
-      } else if ((player1Card.value = player2Card.value)) {
+      } else if (player1Card.value === player2Card.value) {
         this.player1.score = 0;
         console.log("No point- it was a tie");
       } else player1Card.value > player2Card.value;
@@ -97,70 +88,25 @@ class Game {
       console.log("Player 1 wins a point");
     }
   }
-}
 
-endGame() {
- if (this.player1.score > this.player2.score) {
-    console.log("Player 1 wins the game!");
-  } else if (this.player1.score < this.player2.score) {
-    console.log("Player 2 wins the game!");
-  } else {
-    console.log("The game is a tie!")
+  endGame() {
+    if (this.player1.score > this.player2.score) {
+      console.log("Player 1 wins the game!");
+    } else if (this.player1.score < this.player2.score) {
+      console.log("Player 2 wins the game!");
+    } else {
+      console.log("The game is a tie!");
+      // console.log(
+      //   "FINAL SCORE: ",
+      //   "Player 1 scored " + this.player1.score,
+      //   "Player 2 scored " + this.player2.score
+      // );
+    }
   }
 }
 
-//create an end game method in our class that determines the winner and logs it out, then call this end game method to run it
-
-//   startGame (){
-//     const deck = new Deck();
-//     deck.shuffleDeck();
-
-//     const deckMidpoint = Math.ceil(deck.shuffledDeck / 2);
-//     player1Deck = new Deck(deck.cards.slice(0, deckMidpoint));
-//     player2Deck = new Deck(deck.cards.slice(deckMidpoint, deck.shuffledDeck));
-
-//     const player1Points = 0;
-//     const player2Points = 0;
-
-//     const gameRounds = 26;
-
-//     for (let i = 0; i < gameRounds; i++) {
-//       const player1Card = player1Deck.cards[i].value;
-//       const player2Card = player2Deck.cards[i].value;
-//       if (Object.values(player1Card)[0] > Object.values(player2Card)[0]) {
-//       console.log(`Player 1 wins round ${i+1}`);
-//       player1Points++;
-//       } else if (Object.values(player1Card)[0] < Object.values(player2Card)[0]) {
-//       console.log(`Player 2 wins round ${i+1}`);
-//       player2Points++;
-//       } else {
-//       console.log(`Round ${i+1} is a tie`);
-//     }
-//     }
-//   }
-//   // I need to create a way to show the value of the cards after they are shuffled and moved into each player's hand in order to compare values and assign a point to each player
-//   console.log("Player 1 Points" + player1Points);
-//   console.log("Player 2 Points" + player2Points);
-//   if (player1Points > player2Points) {
-//     console.log("Player 1 wins the game!");
-//   } else if (player1Points < player2Points) {
-//     console.log("Player 2 wins the game!");
-//   } else {
-//     console.log("The game is a tie!");
-//   }
-// }
-
-//   // playGame() {
-//   // const deck = new Deck
-//   // deck.makeDeck()
-//   // deck.shuffleDeck()
-//   //         const i = 0;
-//   //         while (deck.shuffledDeck.length i == 0) {
-//   //         this.player1.hand.push(deck.shuffledDeck.slice)(0, halfDeck)
-//   //         this.player2.hand.push(deck.shuffledDeck.slice)(halfDeck, deck.shuffledDeck.length)}
-//   //         console.log(this.player1.hand)
-//   //         console.log(this.player2.hand)
-//   //         }
-//   //       }
-//   // }
-
+const game = new Game();
+game.makeDeck();
+game.shuffleDeck();
+game.playGame();
+game.endGame();
