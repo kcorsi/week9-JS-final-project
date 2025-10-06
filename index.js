@@ -73,26 +73,32 @@ class Game {
     for (let i = 0; i < 26; i++) {
       const player1Card = this.player1.hand.shift();
       const player2Card = this.player2.hand.shift();
+      
       if (player1Card.value < player2Card.value) {
         this.player1.score++;
         console.log("Player 2 wins a point");
-      } else if ((player1Card.value === player2Card.value)) {
-        this.player1.score = 0;
+      } else if (player1Card.value === player2Card.value) {
         console.log("No point- it was a tie");
-      } else player1Card.value > player2Card.value;
-      this.player2.score++;
-      console.log("Player 1 wins a point");
+      } else {
+        this.player2.score++;
+        console.log("Player 1 wins a point");
+      }
     }
   }
  
   endGame() {
-   if (this.player1.score > this.player2.score) {
+    if (this.player1.score > this.player2.score) {
       console.log("Player 1 wins the game!");
     } else if (this.player1.score < this.player2.score) {
       console.log("Player 2 wins the game!");
     } else {
-      console.log("The game is a tie!")
+      console.log("The game is a tie!");
     }
+    console.log(
+      "FINAL SCORE: ",
+      "Player 1 scored " + this.player1.score,
+      ": Player 2 scored " + this.player2.score
+    );
   }
 }  
 
