@@ -1,6 +1,6 @@
 The purpose of this coding project is to master the concepts presented in the Javascript lessons in my front-end bootcamp.
 
-This project is played in the console and includes a index.html and index.js file.
+This project is played in the console and includes an index.html and index.js file.
 
 The project requirements for the completed WAR game include:
 
