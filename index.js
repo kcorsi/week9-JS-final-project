@@ -11,11 +11,17 @@ The completed project should, when executed, do the following:
 4. After all Cards have been played, display the score and declare the winner.
 */
 
-//Combines suits and ranks for cards in initial 52-card deck, 2 players for the game with empty score and hand
-class Game {
+class Card {
+  constructor (rank, suit, value) {
+    this.rank = rank;
+    this.suit = suit;
+    this.value = value;
+  }
+}
+
+class Deck {
   constructor() {
-    this.deck = [];
-    this.shuffledDeck = [];
+    this.cards = [];
     this.ranks = [
       "Two of",
       "Three of",
@@ -29,91 +35,129 @@ class Game {
       "Jack of",
       "Queen of",
       "King of",
-      "Ace of",
+      "Ace of"
     ];
     this.suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
-
-    this.player1 = {
-      name: "Player1",
-      score: 0,
-      hand: [],
-    };
-
-    this.player2 = {
-      name: "Player2",
-      score: 0,
-      hand: [],
-    };
+    this.createDeck();
   }
 
-  //Creates 52-card deck
-  makeDeck() {
-    for (let i = 0; i < this.suits.length; i++) {
-      for (let j = 0; j < this.ranks.length; j++) {
-        const card = {
-          name: `${this.ranks[j]} ${this.suits[i]}`,
-          value: j + 1,
-        };
-        this.deck.push(card);
+  createDeck() {
+    for (let suit of this.suits) {
+      for (let i = 0; i < this.ranks.length; i++) {
+        const card = new Card(this.ranks[i], suit, i + 2);
+        this.cards.push(card);
       }
     }
+    console.log(this.cards);
   }
 
-  //Creates randomly shuffled deck
-  shuffleDeck() {
-    for (let i = 0; i < 52; i++) {
-      const cardsInDeck = this.deck.length;
+
+//Complete the Fisher-Yates shuffle algorithm
+  shuffle() {
+  for (let i = this.cards.length - 1; i > 0; i--) {
+      const cardsInDeck = this.cards.length;
       const random = Math.floor(Math.random() * (cardsInDeck - 1));
-      const removedCard = this.deck.splice(random, 1);
-      this.shuffledDeck.push(removedCard[0]);
+      const removedCard = this.cards.splice(random, 1);
+      this.cards.push(removedCard[0]);
     }
   }
-  //Function that splits shuffled deck into two even hands for each player, compares the card values and adds a point to the score of each player based on value of the card played
-  playGame() {
-    console.log(this.shuffledDeck);
+  
 
-    game.player1.hand = this.shuffledDeck.slice(0, 26);
-    console.log(this.player1.hand);
-    game.player2.hand = this.shuffledDeck.slice(26, 53);
-    console.log(this.player2.hand);
-
-    for (let i = 0; i < 26; i++) {
-      const player1Card = this.player1.hand.shift();
-      const player2Card = this.player2.hand.shift()
-
-      if (player1Card.value > player2Card.value) {
-        this.player1.score++;
-        console.log("Player 2 wins a point");
-      } else if (player1Card.value === player2Card.value) {
-        console.log("No point- it was a tie");
-      } else {
-        this.player2.score++;
-        console.log("Player 1 wins a point");
-      }
-    }
-  }
-
-    //Scoring function for the game to compare the scores and determine winner or if there is a tie between players
-    endGame() {
-    if (this.player1.score > this.player2.score) {
-      console.log("Player 1 wins the game!");
-    } else if (this.player1.score < this.player2.score) {
-      console.log("Player 2 wins the game!");
-    } else {
-      console.log("The game is a tie!");
-    }
-    console.log(
-      "FINAL SCORE: ",
-      "Player 1 scored " + this.player1.score,
-      ": Player 2 scored " + this.player2.score
-    );
+  deal() {
+    const half = Math.floor(this.cards.length / 2);
+    return [
+      this.cards.slice(0, half),
+      this.cards.slice(half)
+    ];
   }
 }
 
-//Calling all functions to create the new game
+
+//Player class - represents a player in the game
+class Player {
+  constructor(name) {
+    this.name = name;
+    this.hand = [];
+    this.score = 0;
+  }
+
+  receiveCards(cards) {
+    this.hand = cards;
+  }
+
+  playCard() {
+    return this.hand.shift();
+  }
+
+  addPoint() {
+    this.score++;
+  }
+
+  getScore() {
+    return this.score;
+  }
+}
+
+// Game class - manages the game flow and logic
+class Game {
+  constructor() {
+    this.deck = new Deck();
+    this.player1 = new Player("Player 1");
+    this.player2 = new Player("Player 2");
+  }
+
+  play() {
+    this.deck.shuffle();
+    const [hand1, hand2] = this.deck.deal();
+    this.player1.receiveCards(hand1);
+    this.player2.receiveCards(hand2);
+
+    console.log(this.deck);
+
+    console.log("WAR Card Game Started!");
+    // Play all 26 rounds
+    for (let i = 0; i < 26; i++) {
+      console.log(`--- Round ${i + 1} ---`);
+
+      const card1 = this.player1.playCard();
+      const card2 = this.player2.playCard();
+
+      console.log(`${this.player1.name} plays: ${card1.rank} ${card1.suit} (value: ${card1.value})`);
+      console.log(`${this.player2.name} plays: ${card2.rank} ${card2.suit} (value: ${card2.value})`);
+      
+      if (card1.value > card2.value) {
+        this.player1.addPoint();
+        console.log("Player 1 wins a point!")
+      } else if (card1.value < card2.value) {
+        this.player2.addPoint();
+        console.log("Player 2 wins a point!");
+      } else {
+        console.log("It's a tie - no points awarded");
+      }
+    }
+    this.endGame();
+  }
+
+
+  endGame() {
+    console.log("=".repeat(40));
+    console.log("GAME OVER!");
+    console.log("=".repeat(40));
+    //Display both players' final scores
+    console.log(`${this.player1.name}'s final score is ${this.player1.score}`);
+    console.log(`${this.player2.name}'s final score is ${this.player2.score}`)
+
+    console.log("=".repeat(40));
+    //Compare scores and announce the winner
+    if (this.player1.score > this.player2.score) {
+        console.log("Player 1 wins the game!")
+      } else if (this.player1.score < this.player2.score) {
+        console.log("Player 2 wins the game!")
+      }
+  }
+}
+
+//Create and start a new game
 const game = new Game();
-game.makeDeck();
-game.shuffleDeck();
-game.playGame();
-game.endGame();
+game.play();
 
